@@ -30,3 +30,5 @@ const styles = StyleSheet.create({
 		marginRight: "auto",
 	},
 });
+
+// tailwind is in use for styling, uses className instead of style

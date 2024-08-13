@@ -46,3 +46,6 @@ const RootLayout = () => {
 };
 
 export default RootLayout;
+
+// adding a folder wrapped in parenthesis() to the app folder is called a route group
+// allows for the adding of screens that can have a special layout

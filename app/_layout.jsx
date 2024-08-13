@@ -1,3 +1,5 @@
+// DEFAULT LAYOUT AND STYLES
+
 // Slot refers to and renders the current child route(index.jsx)
 // Stack allows for the stacking of pages for routing purposes
 import { StyleSheet, Text, View } from "react-native";

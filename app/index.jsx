@@ -7,8 +7,8 @@ export default function App() {
 		<View className="flex-1 items-center justify-center bg-red">
 			<Text className="text-3xl font-pblack">Trending Videos</Text>
 			<StatusBar style="auto" />
-			<Link href="/profile" style={styles.link}>
-				Go to profile...
+			<Link href="/home" style={styles.link}>
+				Go to Home...
 			</Link>
 			<Image source={require("../assets/pw-logo.png")} style={styles.image} />
 		</View>

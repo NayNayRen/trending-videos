@@ -3,7 +3,7 @@ import { Tabs, Redirect } from "expo-router";
 import { icons } from "../../constants";
 
 // building custom componenet is like your own function, passing params(props)
-// returning the element/containeras a <Viwe> which is basically a HTML div
+// returning the element/containeras a <View> which is basically a HTML div
 // icon image followed by its text
 // ternary says if focuse its bold, else its normal
 const TabIcon = ({ icon, name, color, focused }) => {
@@ -15,7 +15,10 @@ const TabIcon = ({ icon, name, color, focused }) => {
 				tintColor={color}
 				className="w-6 h-6"
 			/>
-			<Text className={`${focused ? "font-psemibold" : "font-pregular"}`}>
+			<Text
+				className={`${focused ? "font-psemibold" : "font-pregular"} text-xs`}
+				style={{ color: color }}
+			>
 				{name}
 			</Text>
 		</View>
@@ -29,6 +32,14 @@ const TabsLayout = () => {
 			<Tabs
 				screenOptions={{
 					tabBarShowLabel: false,
+					tabBarActiveTintColor: "#ffa001",
+					tabBarInactiveTintColor: "#cdcde0",
+					tabBarStyle: {
+						backgroundColor: "#161622",
+						borderTopWidth: 1,
+						borderTopColor: "#232533",
+						height: 85,
+					},
 				}}
 			>
 				<Tabs.Screen
@@ -46,6 +57,51 @@ const TabsLayout = () => {
 						),
 					}}
 				/>
+				<Tabs.Screen
+					name="bookmark"
+					options={{
+						title: "Bookmark",
+						headerShown: false,
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={icons.bookmark}
+								color={color}
+								name="Bookmark"
+								focused={focused}
+							/>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name="create"
+					options={{
+						title: "Create",
+						headerShown: false,
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={icons.plus}
+								color={color}
+								name="Create"
+								focused={focused}
+							/>
+						),
+					}}
+				/>
+				<Tabs.Screen
+					name="profile"
+					options={{
+						title: "Profile",
+						headerShown: false,
+						tabBarIcon: ({ color, focused }) => (
+							<TabIcon
+								icon={icons.profile}
+								color={color}
+								name="Profile"
+								focused={focused}
+							/>
+						),
+					}}
+				/>
 			</Tabs>
 		</>
 	);
@@ -58,6 +114,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		alignItems: "center",
 		justifyContenr: "center",
+		gap: 2,
 	},
 });
 

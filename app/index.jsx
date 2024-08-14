@@ -31,4 +31,5 @@ const styles = StyleSheet.create({
 	},
 });
 
+// View component is basically an HTML <div> element
 // tailwind is in use for styling, uses className instead of style

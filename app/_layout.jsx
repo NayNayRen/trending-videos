@@ -40,6 +40,9 @@ const RootLayout = () => {
 	return (
 		<Stack>
 			<Stack.Screen name="index" options={{ headerShown: false }} />
+			<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+			<Stack.Screen name="/search/[query]" options={{ headerShown: false }} />
 		</Stack>
 	);
 };
@@ -50,3 +53,4 @@ export default RootLayout;
 // Stack allows for the stacking of pages for routing purposes
 // adding a folder wrapped in parenthesis() to the app folder is called a route group
 // allows for the adding of screens that can have a special layout
+// setting options headerShown false removes the whit header from each screen

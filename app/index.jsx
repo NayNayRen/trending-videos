@@ -21,7 +21,7 @@ export default function App() {
 						resizeMode="contain"
 					/>
 					<View className="relative mt-5">
-						<Text className="text-3xl text-white font-bold text-center">
+						<Text className="text-2xl text-white font-bold text-center">
 							Find a new trend with
 							<Text className={"text-secondary-200"}> Aora</Text>
 						</Text>

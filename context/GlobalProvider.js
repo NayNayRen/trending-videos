@@ -1,12 +1,46 @@
 import { createContext, useContext, useState, useEffect } from "react";
-
+import { getCurrentUser } from "../lib/appwrite";
 // basically gets session and persists through the app and all screens
 const GlobalContext = createContext();
 export const useGlobalContext = () => useContext(GlobalContext);
 // children are the app screens
 const GlobalProvider = ({ children }) => {
-	const [isLoggedIn, setisLoggedIn] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [user, setUser] = useState(null);
-	const [isLoading, setisLoading] = useState(true);
-	return <GlobalContext.Provider value={{}}>{children}</GlobalContext.Provider>;
+	const [isLoading, setIsLoading] = useState(true);
+	// fires at app load to check for current user
+	useEffect(() => {
+		getCurrentUser()
+			.then((response) => {
+				if (response) {
+					setIsLoggedIn(true);
+					setUser(response);
+				} else {
+					setIsLoggedIn(false);
+					setUser(null);
+				}
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+			.finally(() => {
+				setIsLoading(false);
+			});
+	}, []);
+	// dependency array above is left empty so it only calls on load
+	return (
+		<GlobalContext.Provider
+			value={{
+				isLoggedIn,
+				setIsLoggedIn,
+				user,
+				setUser,
+				isLoading,
+			}}
+		>
+			{children}
+		</GlobalContext.Provider>
+	);
 };
+
+export default GlobalProvider;

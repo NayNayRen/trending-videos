@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { Slot, SplashScreen, Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
+import GlobalProvider from "../context/GlobalProvider";
 
 // prevents splash screen from auto hiding before all assets are loaded
 SplashScreen.preventAutoHideAsync();
@@ -38,12 +39,14 @@ const RootLayout = () => {
 		return null;
 	}
 	return (
-		<Stack>
-			<Stack.Screen name="index" options={{ headerShown: false }} />
-			<Stack.Screen name="(auth)" options={{ headerShown: false }} />
-			<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-			<Stack.Screen name="/search/[query]" options={{ headerShown: false }} />
-		</Stack>
+		<GlobalProvider>
+			<Stack>
+				<Stack.Screen name="index" options={{ headerShown: false }} />
+				<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+				<Stack.Screen name="/search/[query]" options={{ headerShown: false }} />
+			</Stack>
+		</GlobalProvider>
 	);
 };
 
@@ -54,3 +57,4 @@ export default RootLayout;
 // adding a folder wrapped in parenthesis() to the app folder is called a route group
 // allows for the adding of screens that can have a special layout
 // setting options headerShown false removes the whit header from each screen
+// <GlobalProvider> wrapper checks for user session, persists app wide

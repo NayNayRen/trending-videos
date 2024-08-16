@@ -5,6 +5,7 @@ import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 import { Link } from "expo-router";
+import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
 	// useState hook
@@ -16,7 +17,8 @@ const SignUp = () => {
 	});
 	const [isSubmitting, setisSubmitting] = useState(false);
 	const submit = () => {
-		console.log("clicked");
+		createUser();
+		console.log("User Created");
 	};
 	return (
 		<SafeAreaView className="bg-primary h-full">
@@ -50,7 +52,7 @@ const SignUp = () => {
 						otherStyles="mt-7"
 					/>
 					<CustomButton
-						title="Sign In"
+						title="Sign Up"
 						handlePress={submit}
 						containerStyles="w-full mt-10"
 						isLoading={isSubmitting}

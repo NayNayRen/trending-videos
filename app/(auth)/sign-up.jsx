@@ -1,24 +1,38 @@
-import { View, Text, ScrollView, Image } from "react-native";
+import { View, Text, ScrollView, Image, Alert } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { images } from "../../constants";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
 	// useState hook
 	// sets value for email FormField below
 	const [form, setForm] = useState({
-		userName: "",
+		username: "",
 		email: "",
 		password: "",
 	});
 	const [isSubmitting, setisSubmitting] = useState(false);
-	const submit = () => {
-		createUser();
-		console.log("User Created");
+	const submit = async () => {
+		if (!form.email || !form.password || !form.username) {
+			Alert.alert("Error", "All fields must have valid user information.");
+		}
+		setisSubmitting(true);
+		try {
+			const result = await createUser(form.email, form.password, form.username);
+			console.log("User Created");
+			// soon will get set to global state...
+			console.log(result);
+			// redirects back home
+			router.replace("/home");
+		} catch (error) {
+			Alert.alert("Error", error.message);
+		} finally {
+			setisSubmitting(false);
+		}
 	};
 	return (
 		<SafeAreaView className="bg-primary h-full">
@@ -34,8 +48,8 @@ const SignUp = () => {
 					</Text>
 					<FormField
 						title="User Name"
-						value={form.userName}
-						handleChangeText={(e) => setForm({ ...form, userName: e })}
+						value={form.username}
+						handleChangeText={(e) => setForm({ ...form, username: e })}
 						otherStyles="mt-7"
 					/>
 					<FormField

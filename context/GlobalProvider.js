@@ -42,5 +42,5 @@ const GlobalProvider = ({ children }) => {
 		</GlobalContext.Provider>
 	);
 };
-
+// exported here, imported in main app _layout
 export default GlobalProvider;

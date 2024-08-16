@@ -10,6 +10,7 @@ export default function App() {
 	// checking for logged in user, skips landing page if so
 	const { isLoading, isLoggedIn } = useGlobalContext();
 	if (!isLoading && isLoggedIn) {
+		// auto redirects to your home page
 		return <Redirect href="/home" />;
 	}
 	return (

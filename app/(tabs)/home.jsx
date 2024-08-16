@@ -1,16 +1,25 @@
-import { View, Text, FlatList } from "react-native";
-import React from "react";
+import { View, Text, FlatList, RefreshControl } from "react-native";
+import React, { useState } from "react";
 import { Image } from "react-native";
 import { images } from "../../constants";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SearchInput from "../../components/SearchInput";
 import TrendingList from "../../components/TrendingList";
+import EmptyState from "../../components/EmptyState";
 
 const Home = () => {
+	// builds a refresher, when tyou pull down on the screen to reload
+	const [refreshing, setRefreshing] = useState(false);
+	const onRefresh = async () => {
+		setRefreshing(true);
+		// reload videos
+		setRefreshing(true);
+	};
 	return (
-		<SafeAreaView className="bg-primary">
+		<SafeAreaView className="bg-primary h-full">
 			<FlatList
 				data={[{ id: 1 }, { id: 2 }]}
+				// data={[]}
 				keyExtractor={(item) => item.$id}
 				renderItem={({ item }) => (
 					<Text className="text-2xl text-white">{item.id}</Text>
@@ -45,6 +54,15 @@ const Home = () => {
 						</View>
 					</View>
 				)}
+				ListEmptyComponent={() => (
+					<EmptyState
+						title="No Videos Found..."
+						subtitle="Be the first to upload a video."
+					/>
+				)}
+				refreshControl={
+					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+				}
 			/>
 		</SafeAreaView>
 	);
@@ -55,3 +73,5 @@ export default Home;
 // renderItem takes item being displayed, with the component type to display it with
 // ListHeaderComponent lets you build custom header
 // <TrendingList> says use the first array, if it doesn't exist use the second one
+// ListEmptyComponent holds <EmptyState> which displays if no videos are available
+// RefreshControl allows for swiping down to reload the screen

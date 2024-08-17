@@ -4,12 +4,12 @@ import React from "react";
 const TrendingList = ({ posts }) => {
 	return (
 		<FlatList
-			horizontal
 			data={posts}
 			keyExtractor={(item) => item.$id}
 			renderItem={({ item }) => (
 				<Text className="text-2xl text-white">{item.id}</Text>
 			)}
+			horizontal
 		/>
 	);
 };

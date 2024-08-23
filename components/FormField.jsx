@@ -10,7 +10,7 @@ const FormField = ({
 	otherStyles,
 	...props
 }) => {
-	const [showPassword, setshowPassword] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
 	return (
 		<View className={`space-y-2 ${otherStyles}`}>
 			<Text className="text-base text-gray-100 font-pmedium">{title}</Text>
@@ -24,7 +24,7 @@ const FormField = ({
 					secureTextEntry={title === "Password" && !showPassword}
 				/>
 				{title === "Password" && (
-					<TouchableOpacity onPress={() => setshowPassword(!showPassword)}>
+					<TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
 						<Image
 							source={!showPassword ? icons.eye : icons.eyeHide}
 							className="w-6 h-6"

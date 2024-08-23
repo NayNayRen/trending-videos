@@ -8,7 +8,6 @@ import { Link, router } from "expo-router";
 import { createUser } from "../../lib/appwrite";
 
 const SignUp = () => {
-	// useState hook
 	// sets value for email FormField below
 	const [form, setForm] = useState({
 		username: "",

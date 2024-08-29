@@ -1,15 +1,9 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
+import { View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
 import { icons } from "../constants";
 
-const VideoCard = ({
-	video: {
-		title,
-		thumbnail,
-		video,
-		creator: { username, avatar },
-	},
-}) => {
+const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
+	const [play, setPlay] = useState(false);
 	return (
 		<View className="flex-col items-center px-4 mb-10">
 			<View className="flex-row gap-3 items-start">
@@ -32,14 +26,34 @@ const VideoCard = ({
 							className="text-sm text-gray-100 font-pregular"
 							numberOfLines={1}
 						>
-							{username}
+							{creator}
 						</Text>
 					</View>
 				</View>
-				<View className="pt-2">
-					<Image source={icons.menu} />
+				<View className="pt-2 w-5 h-5">
+					<Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
 				</View>
 			</View>
+			{play ? (
+				<Text className="text-white">Playing</Text>
+			) : (
+				<TouchableOpacity
+					activeOpacity={0.7}
+					className="w-full h-60 rounded-xl mt-3 relative flex justify-center items-center"
+					onPress={() => setPlay(true)}
+				>
+					<Image
+						source={{ uri: thumbnail }}
+						className="w-full h-full rounded-xl mt-3"
+						resizeMode="cover"
+					/>
+					<Image
+						source={icons.play}
+						className="w-12 h-12 absolute"
+						resizeMode="contain"
+					/>
+				</TouchableOpacity>
+			)}
 		</View>
 	);
 };

@@ -1,17 +1,18 @@
-import { View, Text, FlatList, RefreshControl, Alert } from "react-native";
-import React, { useEffect, useState } from "react";
+import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import { Image } from "react-native";
 import { images } from "../../constants";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, FlatList, RefreshControl, Alert } from "react-native";
+import EmptyState from "../../components/EmptyState";
+import React, { useEffect, useState } from "react";
 import SearchInput from "../../components/SearchInput";
 import TrendingList from "../../components/TrendingList";
-import EmptyState from "../../components/EmptyState";
-import { getAllPosts } from "../../lib/appwrite";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
 
 const Home = () => {
 	const { data: posts, refetch } = useAppwrite(getAllPosts);
+	const { data: latestPosts } = useAppwrite(getLatestPosts);
 	// builds a refresher, when tyou pull down on the screen to reload
 	const [refreshing, setRefreshing] = useState(false);
 	const onRefresh = async () => {
@@ -23,8 +24,16 @@ const Home = () => {
 		<SafeAreaView className="bg-primary h-full">
 			<FlatList
 				data={posts}
-				keyExtractor={(item) => item.$id}
-				renderItem={({ item }) => <VideoCard video={item} />}
+				renderItem={({ item }) => (
+					<VideoCard
+						key={item.$id}
+						title={item.title}
+						thumbnail={item.thumbnail}
+						video={item.video}
+						creator={item.creator.username}
+						avatar={item.creator.avatar}
+					/>
+				)}
 				ListHeaderComponent={() => (
 					<View className="my-6 px-4 space-y-6">
 						<View className="justify-between items-start flex-row mb-6">
@@ -51,7 +60,7 @@ const Home = () => {
 							<Text className="text-gray-100 text-lg font-pregular mb-3">
 								Latest Videos...
 							</Text>
-							<TrendingList posts={[{ id: 1 }, { id: 2 }] ?? []} />
+							<TrendingList posts={latestPosts ?? []} />
 						</View>
 					</View>
 				)}

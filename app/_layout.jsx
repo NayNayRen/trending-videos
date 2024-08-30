@@ -52,7 +52,6 @@ const RootLayout = () => {
 
 export default RootLayout;
 
-// Slot refers to and renders the current child route(index.jsx)
 // Stack allows for the stacking of pages for routing purposes
 // adding a folder wrapped in parenthesis() to the app folder is called a route group
 // allows for the adding of screens that can have a special layout

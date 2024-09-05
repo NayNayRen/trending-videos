@@ -2,17 +2,19 @@ import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import { Image } from "react-native";
 import { images } from "../../constants";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, Text, FlatList, RefreshControl, Alert } from "react-native";
+import { View, Text, FlatList, RefreshControl } from "react-native";
 import EmptyState from "../../components/EmptyState";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SearchInput from "../../components/SearchInput";
 import TrendingList from "../../components/TrendingList";
 import useAppwrite from "../../lib/useAppwrite";
 import VideoCard from "../../components/VideoCard";
+import { useGlobalContext } from "../../context/GlobalProvider";
 
 const Home = () => {
 	const { data: posts, refetch } = useAppwrite(getAllPosts);
 	const { data: latestPosts } = useAppwrite(getLatestPosts);
+	const { user, setUser, setIsLoggedIn } = useGlobalContext();
 	// builds a refresher, when tyou pull down on the screen to reload
 	const [refreshing, setRefreshing] = useState(false);
 	const onRefresh = async () => {
@@ -42,7 +44,7 @@ const Home = () => {
 									Welcome Back...
 								</Text>
 								<Text className="text-2xl font-psemibold text-white">
-									Jedi Mind
+									{user?.username}
 								</Text>
 							</View>
 							<View className="mt-2">

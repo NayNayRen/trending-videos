@@ -1,3 +1,6 @@
+import React, { useState } from "react";
+import { icons } from "../constants";
+import { router, usePathname } from "expo-router";
 import {
 	View,
 	Text,
@@ -6,16 +9,16 @@ import {
 	Image,
 	Alert,
 } from "react-native";
-import React, { useState } from "react";
-import { icons } from "../constants";
-import { router, usePathname } from "expo-router";
 
-const SearchInput = () => {
+const SearchInput = ({ initialQuery }) => {
 	const pathName = usePathname();
-	const [query, setQuery] = useState("");
+	// set it to the first query or an empty string
+	const [query, setQuery] = useState(initialQuery || "");
+
 	return (
 		<View className="border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-xl focus:border-secondary items-center flex-row">
 			<TextInput
+				autoCapitalize="sentences"
 				className="flex-1 text-white font-pregular text-base"
 				value={query}
 				placeholder="Find your flavor..."
@@ -24,13 +27,13 @@ const SearchInput = () => {
 			/>
 			<TouchableOpacity
 				onPress={() => {
-					if (!query) {
+					if (query === "") {
 						return Alert.alert(
 							"Empty Input",
 							"We need something to search for..."
 						);
 					}
-					// meens we are already on the search screen
+					// means we are already on the search screen
 					if (pathName.startsWith("/search")) {
 						router.setParams({ query });
 					} else {

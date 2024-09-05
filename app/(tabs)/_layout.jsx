@@ -1,6 +1,7 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import { Tabs, Redirect } from "expo-router";
 import { icons } from "../../constants";
+import { StatusBar } from "expo-status-bar";
 
 // building custom componenet is like your own function, passing params(props)
 // returning the element/containeras a <View> which is basically a HTML div
@@ -103,6 +104,7 @@ const TabsLayout = () => {
 					}}
 				/>
 			</Tabs>
+			<StatusBar backgroundColor="#161622" style="light" />
 		</>
 	);
 };

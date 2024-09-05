@@ -1,27 +1,43 @@
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import {
+	View,
+	Text,
+	TextInput,
+	TouchableOpacity,
+	Image,
+	Alert,
+} from "react-native";
 import React, { useState } from "react";
 import { icons } from "../constants";
+import { router, usePathname } from "expo-router";
 
-const SearchInput = ({
-	title,
-	value,
-	placeholder,
-	handleChangeText,
-	otherStyles,
-	...props
-}) => {
-	const [showPassword, setshowPassword] = useState(false);
+const SearchInput = () => {
+	const pathName = usePathname();
+	const [query, setQuery] = useState("");
 	return (
 		<View className="border-2 border-black-200 w-full h-16 px-4 bg-black-100 rounded-xl focus:border-secondary items-center flex-row">
 			<TextInput
 				className="flex-1 text-white font-pregular text-base"
-				value={value}
-				placeholder="Find your flavor"
-				placeholderTextColor="#7b7b8b"
-				onChangeText={handleChangeText}
-				secureTextEntry={title === "Password" && !showPassword}
+				value={query}
+				placeholder="Find your flavor..."
+				placeholderTextColor="#cdcde0"
+				onChangeText={(e) => setQuery(e)}
 			/>
-			<TouchableOpacity>
+			<TouchableOpacity
+				onPress={() => {
+					if (!query) {
+						return Alert.alert(
+							"Empty Input",
+							"We need something to search for..."
+						);
+					}
+					// meens we are already on the search screen
+					if (pathName.startsWith("/search")) {
+						router.setParams({ query });
+					} else {
+						router.push(`/search/${query}`);
+					}
+				}}
+			>
 				<Image source={icons.search} className="w-6 h-6" resizeMode="contain" />
 			</TouchableOpacity>
 		</View>
@@ -29,6 +45,3 @@ const SearchInput = ({
 };
 
 export default SearchInput;
-
-// props being used(value, placeholder etc) are passed through SearchInput component in sign-in.jsx
-// secureTextEntry says that if the title is Password then mask the text to not show the value

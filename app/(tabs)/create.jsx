@@ -4,7 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import FormField from "../../components/FormField";
 import { icons } from "../../constants";
 import CustomButton from "../../components/CustomButton";
-
+// import * as DocumentPicker from "expo-document-picker";
+// import { ResizeMode, Video } from "expo-av";
 const Create = () => {
 	const [uploading, setUploading] = useState(false);
 	const [form, setForm] = useState({
@@ -13,6 +14,16 @@ const Create = () => {
 		thumbnail: null,
 		prompt: "",
 	});
+
+	const filePicker = async (fileType) => {
+		console.log(fileType);
+		// const result = await DocumentPicker.getDocumentAsync({
+		// 	type:
+		// 		fileType === "image"
+		// 			? ["image/png", "image/jpg"]
+		// 			: ["video/mp4", "video/gif"],
+		// });
+	};
 
 	const submit = () => {
 		console.log("clicked");
@@ -34,7 +45,7 @@ const Create = () => {
 					<Text className="text-base text-gray-100 font-pmedium">
 						Upload Video
 					</Text>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => filePicker("video")}>
 						{form.video ? (
 							<Text>Video goes here</Text>
 						) : (
@@ -60,7 +71,7 @@ const Create = () => {
 					<Text className="text-base text-gray-100 font-pmedium">
 						Thumbnail
 					</Text>
-					<TouchableOpacity>
+					<TouchableOpacity onPress={() => filePicker("image")}>
 						{form.thumbnail ? (
 							<Image
 								source={{ uri: form.thumbnail.uri }}

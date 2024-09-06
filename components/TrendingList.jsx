@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { icons } from "../constants";
 import React, { useState } from "react";
+import { ResizeMode, Video } from "expo-av";
 // installed along with expo-av using npm install react-native-animatable expo-av
 import * as Animatable from "react-native-animatable";
 
@@ -16,13 +17,13 @@ const zoomIn = {
 		scale: 0.9,
 	},
 	1: {
-		scale: 1.1,
+		scale: 1,
 	},
 };
 
 const zoomOut = {
 	0: {
-		scale: 1.1,
+		scale: 1,
 	},
 	1: {
 		scale: 0.9,
@@ -39,7 +40,18 @@ const TrendingItem = ({ activeItem, item }) => {
 			duration={500}
 		>
 			{play ? (
-				<Text className="text-white">Playing</Text>
+				<Video
+					source={{ uri: item.video }}
+					className="w-52 h-72 rounded-[33px] mt-3 bg-white/10"
+					resizeMode={ResizeMode.CONTAIN}
+					useNativeControls
+					shouldPlay
+					onPlaybackStatusUpdate={(status) => {
+						if (status.didJustFinish) {
+							setPlay(false);
+						}
+					}}
+				/>
 			) : (
 				<TouchableOpacity
 					className="relative flex justify-center items-center"
@@ -77,13 +89,13 @@ const TrendingList = ({ posts }) => {
 	return (
 		<FlatList
 			data={posts}
-			horizontal
-			onViewableItemsChanged={viewableItemsChanged}
-			viewabilityConfig={{ itemVisiblePercentThreshold: 70 }}
-			contentOffset={{ x: 190 }}
 			renderItem={({ item }) => (
 				<TrendingItem key={item.$id} activeItem={activeItem} item={item} />
 			)}
+			horizontal
+			onViewableItemsChanged={viewableItemsChanged}
+			viewabilityConfig={{ itemVisiblePercentThreshold: 70 }}
+			contentOffset={{ x: 170 }}
 		/>
 	);
 };
